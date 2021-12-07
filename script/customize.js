@@ -17,20 +17,19 @@ function getDetailIndexById(kind,id) {
   return -1;
 }
 var detailCheck = [0,0,0,0,0,0];
-var baseCost = 15000;
+var baseCost = 0;
 var dispCost = 0;
+var itemCode = -1;
 
 function setupBody(){
   setKindEvent();
-//  addDetailData();
+  setInCartEvent();
 }
-
 function setKindEvent(){
   kindData.forEach(kind=>{
     Evt(Id('kind_'+kind),'change',refleshDetailData);
   });
 }
-
 function addDetailData(){
   const div=Id('detailselector');
   let radVal=0;
@@ -53,7 +52,6 @@ function addDetailData(){
     );
   }
 }
-
 function setPartsList() {
   for(let i=0;i<kindData.length;i++) {
     Id('part_'+kindData[i]).textContent=detailData[i][detailCheck[i]].name;
@@ -62,23 +60,41 @@ function setPartsList() {
   Id('p_price').textContent=getPriceText(dispCost);
   refleshDetailData();
 }
-
 function calcDispCost(){
   dispCost=baseCost;
-  for (let i=0;i<kindData.length;i++)
+  for (let i=0;i<kindData.length;i++) {
     dispCost+=detailData[i][detailCheck[i]].price;
+    Log(detailData[i][detailCheck[i]].price);
+  }
+  Log(dispCost);
 }
-
 function setDetailCk(){
   detailCheck[Math.floor(this.value/10)]=this.value%10;
   setPartsList();
 }
-
 function refleshDetailData(){
   const div=Id('detailselector');
   delChild(div);
   addDetailData();
 };
+function setInCartEvent() {
+  Evt(Id('incart'),'click',addCart);
+}
+function addCart() {
+  refleshDetailData();
+  let req=new XMLHttpRequest();
+  req.open('POST','connect/addSession.php',true);
+  req.responseType='json';
+  let form=new FormData();
+  form.append('base','excart');
+  for(let i=0;i<kindData.length;i++){
+    form.append(kindData[i]+'_id',detailData[i][detailCheck[i]].id);
+  }
+  form.append('code',itemCode);
+  form.append('price',dispCost);
+  req.send(form);
+  window.location.href = 'cart.php';
+}
 
 window.onload=function() {
   setupBody();

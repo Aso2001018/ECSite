@@ -133,6 +133,9 @@ function addCart() {
   let req=new XMLHttpRequest();
   req.open('POST','connect/addSession.php',true);
   req.responseType='json';
+  Evt(req,'load',()=>{
+    Log(this.response);
+  })
   let form=new FormData();
   form.append('base','cart');
   form.append('mode','add');
@@ -173,45 +176,50 @@ function addFavoButton(isfav,name) {
 /**商品データの作成*/
 class itemDataStruct{
   constructor(href,img,name,html,price,flg,flg2,item_code,os_id,cpu_id,ram_id,gpu_id,ssd_id,hdd_id,cart_id=-1) {
+    this.href=href;
+    this.img=img;
     this.name=name;
+    this.html=html;
+    this.price=Number(price);
+    this.flg=flg;
+    this.flg2=flg2;
     this.item_code=item_code;
-    this.item_fav=false;
-    this.cart_code=flg?cart_id:item_code;
+    this.cart_code=this.flg?cart_id:item_code;
     this.os_id=os_id;
     this.cpu_id=cpu_id;
     this.ram_id=ram_id;
     this.gpu_id=gpu_id;
     this.ssd_id=ssd_id;
     this.hdd_id=hdd_id;
-    this.price=Number(price);
     this.object=
     add(
       cDiv('class','item'),
       add(
         cDiv('class','item_img'),
         add(
-          cA('href',href),
-          cImg('src',img,'event','error',recoverImg)
+          cA('href',this.href),
+          cImg('src',this.img,'event','error',recoverImg)
         )
       ),
       add(
         cDiv('class','item_noimage'),
         add(
           cDiv('class','item_name'),
-          cText(name)
+          cText(this.name)
         ),
         add(
           cDiv('class','item_desc'),
-          cUl('inhtml',html)
+          cUl('inhtml',this.html)
         ),
         add(
           cDiv('class','item_price','id','item_price'),
-          cText(getPriceText(price)+'(税込)'+(!flg?'～':''))
+          cText(getPriceText(this.price)+'(税込)'+(!this.flg?'～':''))
         ),
         add(
           cDiv('class','item_button'),
           add(
             cForm('method','post','action','customize.php'),
+            cInput('name','item_code','value',this.item_code,'style','display:none'),
             cInput('name','os_id','value',this.os_id,'style','display:none'),
             cInput('name','cpu_id','value',this.cpu_id,'style','display:none'),
             cInput('name','memory_id','value',this.ram_id,'style','display:none'),
@@ -223,11 +231,11 @@ class itemDataStruct{
               cText('商品詳細へ')
             )
           ),
-          addCartButton(flg,this.cart_code),
-          addFavoButton(flg2,this.name),
+          addCartButton(this.flg,this.cart_code),
+          addFavoButton(this.flg2,this.name),
           add(
             cLabel('class','button_favorite','html','check_favorite'+this.name,'event','click',
-            fixFav.bind(item_code),'style',islogin?'':'display:none;'),
+            fixFav.bind(this.item_code),'style',islogin?'':'display:none;'),
             cI('class','fas fa-heart','style',islogin?'':'display:none;')
           )
         )

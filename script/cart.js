@@ -1,23 +1,32 @@
-let cartItemData=[];
+class CartItem{
+  constructor(item_code,cart_code,os_id,cpu_id,ram_id,gpu_id,ssd_id,hdd_id,price) {
+    this.item_code=item_code;
+    this.cart_code=cart_code;
+    this.os_id=os_id;
+    this.cpu_id=cpu_id;
+    this.ram_id=ram_id;
+    this.gpu_id=gpu_id;
+    this.ssd_id=ssd_id;
+    this.hdd_id=hdd_id;
+    this.price=price;
+  }
+}
+let cartItemDataList=[];
 let cartItemList=[];
-let cartItemCode=[];
 
 let masterPrice=0;
 let itemNum=0;
 window.onload=function(){
-  if (cartItemList.length==0)cartItemList.push(-1);
+  if (cartItemList.length==0)cartItemList.push(new CartItem(-1,-1,-1,-1,-1,-1,-1,-1,-1));
   let ary = Array('table','d_item','code',1);
   for(let i = 0;i<cartItemList.length;i++) {
-    ary.push('code_'+i,cartItemList[i]);
+    ary.push('code_'+i,cartItemList[i].item_code);
   }
   ary.push('list',cartItemList.length);
   getDbResponseArray(setCartItem,ary);
 }
 function setCartItem() {
   const div=Id('item_area');
-  Log(cartItemList);
-  Log(cartItemCode);
-  Log(this.response);
   if(this.response==null) {
     add(
       div,
@@ -27,9 +36,9 @@ function setCartItem() {
   }
   else {
     this.response.forEach(val=>{
-      cartItemData.push(new cartItemDataStruct('#',val['imgurl'],val['item_name'],'',val['price'],val['isfav'],val['item_code'],val['os_id'],val['cpu_id'],val['memory_id'],val['gpu_id'],val['ssd_id'],val['hdd_id']));
+      cartItemDataList.push(new cartItemDataStruct('#',val['imgurl'],val['item_name'],'',val['price'],val['isfav'],val['item_code'],val['os_id'],val['cpu_id'],val['memory_id'],val['gpu_id'],val['ssd_id'],val['hdd_id']));
     });
-    itemNum=cartItemData.length;
+    itemNum=cartItemDataList.length;
     if(itemNum==0) {
       add(
         div,
@@ -38,17 +47,22 @@ function setCartItem() {
       );
     }
     else {
-      cartItemData.forEach(val=>{
-        add(
-          div,
-          cHr(),
-          val.object
-        );
-        masterPrice+=val.price;
+      cartItemList.forEach(ci=>{
+        cartItemDataList.forEach(cids=>{
+          if (ci.item_code == cids.item_code) {
+            let addCIDS = copyCIDS(cids,ci);
+            add(
+              div,
+              cHr(),
+              addCIDS.object
+            );
+            masterPrice+=ci.price;
+          }
+        });
       });
+      add(Id('cont'),setOkButton());
     }
   }
-  add(Id('cont'),setOkButton());
 }
 function setOkButton() {
   return add(
@@ -75,7 +89,25 @@ function setOkButton() {
 
 /**カート内データの作成*/
 class cartItemDataStruct extends itemDataStruct{
-  constructor(href,img,name,html,price,isfav,item_code,os_id,cpu_id,ram_id,gpu_id,ssd_id,hdd_id) {
-    super(href,img,name,html,price,true,isfav,item_code,os_id,cpu_id,ram_id,gpu_id,ssd_id,hdd_id);
+  constructor(href,img,name,html,price,isfav,item_code,os_id,cpu_id,ram_id,gpu_id,ssd_id,hdd_id,cart_id) {
+    super(href,img,name,html,price,true,isfav,item_code,os_id,cpu_id,ram_id,gpu_id,ssd_id,hdd_id,cart_id);
   }
+}
+function copyCIDS(cids,ci) {
+  return new cartItemDataStruct(
+    cids.href,
+    cids.img,
+    cids.name,
+    cids.html,
+    ci.price,
+    cids.isfav,
+    cids.item_code,
+    ci.os_id,
+    ci.cpu_id,
+    ci.ram_id,
+    ci.gpu_id,
+    ci.ssd_id,
+    ci.hdd_id,
+    ci.cart_code
+  );
 }

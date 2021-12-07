@@ -2,8 +2,17 @@
 <?php
 echo'<script>';
 for ($i = 1; $i <= $_SESSION['cart_num']; $i++) {
-  echo'cartItemList.push('.$_SESSION['cart_'.$i.'_item_code'].');';
-  echo'cartItemCode.push('.$_SESSION['cart_'.$i.'_cart_code'].');';
+  echo'cartItemList.push(new CartItem(',
+    $_SESSION['cart_'.$i.'_item_code'],',',
+    $_SESSION['cart_'.$i.'_cart_code'],',',
+    $_SESSION['cart_'.$i.'_os_id'],',',
+    $_SESSION['cart_'.$i.'_cpu_id'],',',
+    $_SESSION['cart_'.$i.'_memory_id'],',',
+    $_SESSION['cart_'.$i.'_gpu_id'],',',
+    $_SESSION['cart_'.$i.'_ssd_id'],',',
+    $_SESSION['cart_'.$i.'_hdd_id'],',',
+    $_SESSION['cart_'.$i.'_price'],
+  '));';
 }
 echo'</script>';
 ?>

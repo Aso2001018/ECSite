@@ -2,9 +2,6 @@
 require 'header.php';
 require 'connect/getDBSql.php';
 $pdo=new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;charset=utf8','LAA1290643','sd2adevelopment');
-?>
-<?php
-
 function push($parent,...$childs) {
   foreach($childs as $child) {
     array_push($parent,$child);
@@ -35,15 +32,13 @@ class Kind{
   }
 }
 $kindList=[];
-$kindList=push($kindList, 
+$kindList=push($kindList,
       new Kind('os'),
       new Kind('cpu'),
       new Kind('memory'),
       new Kind('gpu'),
       new Kind('ssd'),
       new Kind('hdd'));
-      
-echo '<script>Log(\'',json_encode($_POST),'\');</script>';
 $dispcost = 0;
 foreach($kindList as $kind) {
   $ary=getDBSql($pdo, 'SELECT * FROM m_'.$kind->name);
@@ -52,6 +47,7 @@ foreach($kindList as $kind) {
     if ((!empty($_POST[$kind->name.'_id']) && $_POST[$kind->name.'_id'] == $val[$kind->name.'_id']) || (empty($_POST[$kind->name.'_id']) && !$unsetflg)) {
       $kind->pushDetail($val[$kind->name.'_id'],$val['name'],$val['price'],true);
       $dispcost += $val['price'];
+      echo'<script>Log(',$val['price'],');</script>';
       $unsetflg = true;
     }
     else {
@@ -59,7 +55,8 @@ foreach($kindList as $kind) {
     }
   };
 }
-echo '<div id="data_stack"style="display:none"><script>';
+echo'<script>Log(',$dispcost,');</script>';
+echo '<div id="data_stack"style="display:none"><script>itemCode=',$_POST['item_code'],';';
 $i=0;
 foreach($kindList as $kind) {
   echo 'kindData.push(\'',$kind->name,'\');';
@@ -103,7 +100,7 @@ foreach ($kindList as $kind) {
       </div>
     </div>
     <div class="buttonincart"id="buttonincart">
-      <button class="incart"type="button">カスタマイズ・お見積りを完了する。</button>
+      <button class="incart"id="incart"type="button">カスタマイズ・お見積りを完了する。</button>
     </div>
   </div>
   <div class="selector"id="selector">
