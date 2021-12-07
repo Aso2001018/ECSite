@@ -1,0 +1,47 @@
+.alert{
+  width:100%;
+  max-width:500px;
+  border:solid 1px #F47;
+  color:#F47;
+  margin:10px auto;
+  padding:10px 0;
+  white-space:normal;
+}
+.loginfield{
+  max-width:500px;
+  border:solid 1px var(--main);
+  margin:0 auto;
+  padding:10px 3%;
+  font-size:13px;
+}
+.box{
+  text-align:left;
+}
+.box input{
+  width:100%;
+  margin:8px 0;
+  padding:0.3em;
+  color:var(--thememain);
+  background-color:var(--sbase);
+  border:solid 1px var(--main);
+  border-radius:4px;
+  font:15px/24px sans-serif;
+  display:block;
+}
+.loginfield button{
+  color:var(--themebase);
+  background-color:var(--thememain);
+  border:solid 2px var(--thememain);
+  border-radius:4px;
+  outline:none;
+  font-size:15px;
+  font-weight:bold;
+  transition:0.1s;
+}
+.loginfield button:hover{
+  color:var(--thememain);
+  background-color:var(--themebase);
+}
+.loginfield button:active{
+  transform:scale(0.9);
+}

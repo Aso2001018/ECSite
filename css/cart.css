@@ -1,0 +1,47 @@
+h2{
+  margin:0;
+  font-size:30px;
+}
+.itemnum{
+  font-size:20px;
+  font-weight:bold;
+}
+.ok{
+  border:solid 1px var(--main);
+  text-align:center;
+  white-space:normal;
+}
+.ok>.sum{
+  display:inline-block;
+  color:var(--main);;
+  font-size:25px;
+  height:40px;
+  margin:3%;
+}
+.sum>span{
+  font-weight:bold;
+  border:none;
+  border-bottom:2px solid #F33;
+  color:#F33;
+}
+.ok_button{
+  display:inline-block;
+  margin:3%;
+}
+.ok_button>button{
+  background-color:var(--sbase);
+  border:2px solid #F63;
+  color:#F63;
+  border-radius:25px;
+  font-size:20px;
+  transition:0.1s;
+}
+.ok_button>button:hover{
+  background-color:#F63;
+  color:var(--sbase);
+  border-color:var(--sbase);
+}
+
+@media screen and (max-width: 480px) {
+
+}
