@@ -50,14 +50,13 @@ function drawTableData($_pdo, $_sql) {
 }
 
 if (isset($_POST['input_sql'])) {
-  $pdo=new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;charset=utf8','LAA1290643','sd2adevelopment');
   echo '<script>console.log(\'',$_POST['input_sql'],'\');</script>';
-  drawTableData($pdo,$_POST['input_sql']);
+  drawTableData($_POST['input_sql']);
 }
 else {
   echo '<script>console.log(\'undefined!\');</script>';
 }
-
+endDbSql();
 ?>
 </body>
 </html>

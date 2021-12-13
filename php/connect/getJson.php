@@ -3,28 +3,28 @@ session_start();
 require 'getDBSql.php';
 
 class SearchSql{
-  public $data;
-  public $poststr;
-  public $mode;
-  public $fmode;
-  public function __construct($data,$poststr,$mode,$fmode) {
-    $this->data = $data;
-    $this->poststr = $poststr;
-    $this->mode = $mode;
-    $this->fmode = $fmode;
-  }
-  public function addSql(&$_sql,&$_andflg) {
-    if (!empty($_POST[$this->poststr])) {
-      switch($this->fmode) {
-        case 1:
-          if ($_andflg) {
-            $_sql.=' AND ';
-          }
-          else {
-            $_sql.=' WHERE ';
-            $_andflg = true;
-          }
-          $_sql.=$this->data.' '.$this->mode.' '.$_POST[$this->poststr];    
+public$data;
+public$getstr;
+public$mode;
+public$fmode;
+public function __construct($data,$getstr,$mode,$fmode){
+  $this->data=$data;
+  $this->getstr=$getstr;
+  $this->mode=$mode;
+  $this->fmode=$fmode;
+}
+public function addSql(&$_sql,&$_andflg){
+if(!empty($_POST[$this->getstr])){
+  switch($this->fmode) {
+    case 1:
+      if ($_andflg) {
+        $_sql.=' AND ';
+      }
+      else {
+        $_sql.=' WHERE ';
+        $_andflg = true;
+      }
+          $_sql.=$this->data.' '.$this->mode.' '.$_POST[$this->getstr];    
           break;
         case 2:
           $_sql.=' ORDER BY ';
@@ -43,7 +43,7 @@ class SearchSql{
             if($i!=0) {
               $_sql.=' OR ';
             }
-            $_sql.=$this->data.' = '.$_POST[$this->poststr.'_'.$i];
+            $_sql.=$this->data.' = '.$_POST[$this->getstr.'_'.$i];
           }
           $_sql.=' )';
           break;
@@ -78,8 +78,7 @@ if (!empty($_POST['table'])) {
     $sql.=';';
   }
 }
-$pdo = new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;charset=utf8','LAA1290643','sd2adevelopment');
-$rary = getDbSql($pdo,$sql);
+$rary = getDbSql($sql);
 for($i = 0;$i<count($rary);$i++){
   $rary[$i]['isfav'] = false;
   for($n = 1; $n <= $_SESSION['fav_num']; $n++) {
@@ -90,5 +89,5 @@ for($i = 0;$i<count($rary);$i++){
   }
 }
 echo json_encode($rary);
-$pdo = null;
+endDbSql();
 ?>

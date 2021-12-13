@@ -1,9 +1,11 @@
 <?php
-function getDbSql($_pdo, $_sql){
-  $_ary=array();
-  foreach ($_pdo->query($_sql) as $_val) {
-    array_push($_ary, $_val);
+function getDbSql($sql){
+  $pdo = new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;charset=utf8','LAA1290643','sd2adevelopment');
+  $ary=array();
+  foreach ($pdo->query($sql) as $val) {
+    array_push($ary, $val);
   }
-  return$_ary;
+  $pdo=null;
+  return$ary;
 }
 ?>

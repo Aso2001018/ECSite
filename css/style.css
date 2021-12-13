@@ -223,12 +223,16 @@ footer{
   list-style:none;
   padding:0;
 }
-.foot-wrap a{
+.foot-wrap a,button{
   text-decoration:none;
+  font-size:16px;
+  border:none;
+  background-color:#0000;
   color:var(--main);
   z-index:3;
+  padding:0;
 }
-.foot-wrap a:hover{
+.foot-wrap a:hover,button:hover{
   color:#558;
   font-weight:bold;
 }

@@ -27,10 +27,9 @@
 </body>
 
 <?php
-
-function drawTableData($_pdo,$_table) {
+function drawTableData($_table) {
   echo'<h3>',$_table,'</h3>';
-  $ary=getDBSql($_pdo,'SELECT * FROM '.$_table);
+  $ary=getDBSql('SELECT * FROM '.$_table);
   if (count($ary)>0) {
     $keys=array_keys($ary[0]);
     foreach ($keys as $name) {
@@ -44,24 +43,22 @@ function drawTableData($_pdo,$_table) {
     }
   }
 }
-function drawTableDB($_pdo) {
+function drawTableDB() {
   echo'<h2>table list</h2>';
-  $ary=getDBSql($_pdo,'show tables');
+  $ary=getDBSql('show tables');
   $keys=array_keys($ary);
   $list=[];
   foreach($ary as $table) {
-    array_push($list,$table['Tables_in_LAA1290643-sd2a03dev']);
-    echo'<div class="box2">',$table['Tables_in_LAA1290643-sd2a03dev'],'</div><br>';
+    array_push($list,$table['Tables_in_LAA1290644-sd2aecdb']);
+    echo'<div class="box2">',$table['Tables_in_LAA1290644-sd2aecdb'],'</div><br>';
   }
   return $list;
 }
-
-$pdo=new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;charset=utf8','LAA1290643','sd2adevelopment');
-$tablelist = drawTableDB($pdo);
+$tablelist = drawTableDB();
 foreach($tablelist as $table) {
-  drawTableData($pdo,$table);
+  drawTableData($table);
 }
-
+endDbSql();
 ?>
 </body>
 </html>

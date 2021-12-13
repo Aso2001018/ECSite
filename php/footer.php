@@ -15,23 +15,25 @@
       </div>
       <div class="menu-center">
         <h3>カテゴリ</h3>
-        <ul class="foot-center">
-          <li style="display: none">f</li>
-          <li><a href="#">デスクトップPC</a></li>
-          <li><a href="#">ノートPC</a></li>
-          <li><a href="#">ゲーミングPC</a></li>
-          <li><a href="#">クリエイター向けPC</a></li>
-          <li><a href="#">周辺機器</a></li>
-        </ul>
+        <form method="get"action="search.php">
+          <ul class="foot-center">
+            <li style="display: none">f</li>
+            <li><button name="Type"value="2"type="submit">デスクトップPC</button></li>
+            <li><button name="Type"value="3"type="submit">ノートPC</button></li>
+            <li><button name="Type"value="1"type="submit">ゲーミングPC</button></li>
+            <li><button name="Type"value="4"type="submit">クリエイター向けPC</button></li>
+            <li><button name="Type"value="0"type="submit">周辺機器</button></li>
+          </ul>
+        </form>
       </div>
         <div class="menu-right">
         <h3>サポート</h3>
         <ul class="foot-right">
           <li style="display: none">f</li>
           <li><a href="signup.php">新規会員登録</a></li>
-          <li><a href="#">ご利用ガイド</a></li>
+          <!-- <li><a href="#">ご利用ガイド</a></li>
           <li><a href="#">お問い合わせ</a></li>
-          <li><a href="#">サポート</a></li>
+          <li><a href="#">サポート</a></li> -->
         </ul>
       </div>
       <small class="cmark">©2021システム開発3班</small>

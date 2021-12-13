@@ -114,7 +114,6 @@ function getPriceText(d,f) {
   }
   return d<0?'-¥'+r.substr(1):f&&d>0?'+¥'+r:'¥'+r;
 }
-
 /**カート操作ボタン追加*/
 function addCartButton(iscart,code) {
   if (iscart)
@@ -130,17 +129,23 @@ function addCartButton(iscart,code) {
 }
 /**カート操作*/
 function addCart() {
-  let req=new XMLHttpRequest();
-  req.open('POST','connect/addSession.php',true);
-  req.responseType='json';
-  Evt(req,'load',()=>{
-    Log(this.response);
-  })
-  let form=new FormData();
-  form.append('base','cart');
-  form.append('mode','add');
-  form.append('code',this);
-  req.send(form);
+  if (islogin) {
+    let req=new XMLHttpRequest();
+    req.open('POST','connect/addSession.php',true);
+    req.responseType='json';
+    let form=new FormData();
+    form.append('base','cart');
+    form.append('mode','add');
+    form.append('code',this);
+    req.send(form);
+  } else {
+    let req=new XMLHttpRequest();
+    req.open('POST','connect/login-connect.php',true);
+    let form=new FormData();
+    form.append('msg','購入するには、ログインする必要があります。');
+    req.send(form);
+    window.location.href = 'login.php';
+  }
 }
 function deleteCart() {
   let req=new XMLHttpRequest();
@@ -151,6 +156,7 @@ function deleteCart() {
   form.append('mode','delete');
   form.append('code',this);
   req.send(form);
+  window.location.href = 'cart.php';
 }
 /**お気に入り操作*/
 function fixFav() {

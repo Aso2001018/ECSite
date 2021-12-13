@@ -2,81 +2,42 @@
 session_start();
 require 'getDBSql.php';
 if ($_POST['base'] == 'fav') {
-  $isset = false;
-  for ($n = 1;$n <= $_SESSION['fav_num']; $n++) {
-    //登録済みであれば削除
-    if ($_SESSION['fav_'.$n.'_item_code'] == $_POST['code']) {
-      $isset = true;
-      for ($l = $n; $l < $_SESSION['fav_num']; $l++) {
-        $_SESSION['fav_'.$l.'_item_code'] = (int)$_SESSION['fav_'.($l+1).'_item_code'];
-      }
-      unset($_SESSION['fav_'.$_SESSION['fav_num'].'_item_code']);
-      $_SESSION['fav_num']--;
-      break;
-    }
-  }
-  if (!$isset) {
-    $i = ++$_SESSION[$_POST['base'].'_num'];
-    $_SESSION[$_POST['base'].'_'.$i.'_item_code'] = (int)$_POST['code'];  
-  }
+  $ary=getDBSql('SELECT * FROM d_fav WHERE user = '.$_SESSION['user_id'].' AND item = '.$_POST['code'].';');
+  $pdo=new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;charset=utf8','LAA1290643','sd2adevelopment');
+  $sql=$pdo->prepare(count($ary) == 0?'INSERT INTO d_fav(user,item) VALUES(?,?);':'DELETE FROM d_fav WHERE user = ? AND item = ?;');
+  $sql->execute([$_SESSION['user_id'],$_POST['code']]);
+  $pdo=null;
 }
 else if ($_POST['base'] == 'cart') {
   if ($_POST['mode'] == 'add') {
-    $i = ++$_SESSION['cart_num'];
-    $_SESSION['cart_'.$i.'_item_code'] = $_POST['code'];
-    $_SESSION['cart_'.$i.'_cart_code'] = $i == 1 ? 1 : $_SESSION['cart_'.($i-1).'_cart_code']+1;
+    $ary=getDBSql('SELECT 
+    d_item.OS AS OS, 
+    d_item.CPU AS CPU, 
+    d_item.RAM AS RAM, 
+    d_item.GPU AS GPU, 
+    d_item.SSD AS SSD, 
+    d_item.HDD AS HDD 
+    FROM d_item, m_os, m_cpu, m_ram, m_gpu, m_ssd, m_hdd 
+    WHERE d_item.OS = m_os.id 
+    AND d_item.CPU = m_cpu.id 
+    AND d_item.RAM = m_ram.id 
+    AND d_item.GPU = m_gpu.id 
+    AND d_item.SSD = m_ssd.id 
+    AND d_item.HDD = m_hdd.id 
+    AND d_item.id = '.$_POST['code']);
     $pdo=new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;charset=utf8','LAA1290643','sd2adevelopment');
-    $ary=getDBSql($pdo,'SELECT * FROM d_item WHERE item_code = '.$_POST['code']);
-    // echo json_encode($ary);
-    $_SESSION['cart_'.$i.'_os_id'] = $ary[0]['os_id'];
-    $_SESSION['cart_'.$i.'_cpu_id'] = $ary[0]['cpu_id'];
-    $_SESSION['cart_'.$i.'_memory_id'] = $ary[0]['memory_id'];
-    $_SESSION['cart_'.$i.'_gpu_id'] = $ary[0]['gpu_id'];
-    $_SESSION['cart_'.$i.'_ssd_id'] = $ary[0]['ssd_id'];
-    $_SESSION['cart_'.$i.'_hdd_id'] = $ary[0]['hdd_id'];
-    $_SESSION['cart_'.$i.'_price'] = $ary[0]['price'];
+    $sql=$pdo->prepare('INSERT INTO d_cart(user,item,OS,CPU,RAM,GPU,SSD,HDD) VALUES(?,?,?,?,?,?,?,?);');
+    $sql->execute([$_SESSION['user_id'],$_POST['code'],$ary[0]['OS'],$ary[0]['CPU'],$ary[0]['RAM'],$ary[0]['GPU'],$ary[0]['SSD'],$ary[0]['HDD']]);
+    $pdo=null;
   }
   else if ($_POST['mode'] == 'delete') {
-    for ($n = 1;$n <= (int)$_SESSION['cart_num']; $n++) {
-      //同じコードのものを削除
-      if ((int)$_SESSION['cart_'.$n.'_cart_code'] == (int)$_POST['code']) {
-        $isset = true;
-        for ($l = $n;$l < (int)$_SESSION['cart_num']; $l++) {
-          $_SESSION['cart_'.$l.'_item_code'] = (int)$_SESSION[$_POST['base'].'_'.($l+1).'_item_code'];
-          $_SESSION['cart_'.$l.'_cart_code'] = (int)$_SESSION[$_POST['base'].'_'.($l+1).'_cart_code'];
-          $_SESSION['cart_'.$l.'_os_id'] = (int)$_SESSION[$_POST['base'].'_'.($l+1).'_os_id'];
-          $_SESSION['cart_'.$l.'_cpu_id'] = (int)$_SESSION[$_POST['base'].'_'.($l+1).'_cpu_id'];
-          $_SESSION['cart_'.$l.'_memory_id'] = (int)$_SESSION[$_POST['base'].'_'.($l+1).'_memory_id'];
-          $_SESSION['cart_'.$l.'_gpu_id'] = (int)$_SESSION[$_POST['base'].'_'.($l+1).'_gpu_id'];
-          $_SESSION['cart_'.$l.'_ssd_id'] = (int)$_SESSION[$_POST['base'].'_'.($l+1).'_ssd_id'];
-          $_SESSION['cart_'.$l.'_hdd_id'] = (int)$_SESSION[$_POST['base'].'_'.($l+1).'_hdd_id'];
-          $_SESSION['cart_'.$l.'_price'] = (int)$_SESSION[$_POST['base'].'_'.($l+1).'_price'];
-        }
-        unset($_SESSION['cart_'.$_SESSION['cart_num'].'_item_code']);
-        unset($_SESSION['cart_'.$_SESSION['cart_num'].'_cart_code']);
-        unset($_SESSION['cart_'.$_SESSION['cart_num'].'_os_id']);
-        unset($_SESSION['cart_'.$_SESSION['cart_num'].'_cpu_id']);
-        unset($_SESSION['cart_'.$_SESSION['cart_num'].'_memory_id']);
-        unset($_SESSION['cart_'.$_SESSION['cart_num'].'_gpu_id']);
-        unset($_SESSION['cart_'.$_SESSION['cart_num'].'_ssd_id']);
-        unset($_SESSION['cart_'.$_SESSION['cart_num'].'_hdd_id']);
-        unset($_SESSION['cart_'.$_SESSION['cart_num'].'_price']);
-        $_SESSION['cart_num']--;
-        break;
-      }
-    }
+    getDBSql('DELETE FROM d_cart WHERE id = '.$_POST['code']);
   }
 }
 else if ($_POST['base'] == 'excart') {
-  $i = ++$_SESSION['cart_num'];
-  $_SESSION['cart_'.$i.'_item_code'] = $_POST['code'];
-  $_SESSION['cart_'.$i.'_cart_code'] = $i == 1 ? 1 : $_SESSION['cart_'.($i-1).'_cart_code']+1;
-  $_SESSION['cart_'.$i.'_os_id'] = $_POST['os_id'];
-  $_SESSION['cart_'.$i.'_cpu_id'] = $_POST['cpu_id'];
-  $_SESSION['cart_'.$i.'_memory_id'] = $_POST['memory_id'];
-  $_SESSION['cart_'.$i.'_gpu_id'] = $_POST['gpu_id'];
-  $_SESSION['cart_'.$i.'_ssd_id'] = $_POST['ssd_id'];
-  $_SESSION['cart_'.$i.'_hdd_id'] = $_POST['hdd_id'];
-  $_SESSION['cart_'.$i.'_price'] = $_POST['price'];
+  $pdo=new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;charset=utf8','LAA1290643','sd2adevelopment');
+  $sql=$pdo->prepare('INSERT INTO d_cart(user,item,OS,CPU,RAM,GPU,SSD,HDD) VALUES(?,?,?,?,?,?,?,?)');
+  $sql->execute([$_SESSION['user_id'],$_POST['code'],$_POST['os'],$_POST['cpu'],$_POST['ram'],$_POST['gpu'],$_POST['ssd'],$_POST['hdd']]);
+  $pdo=null;
 }
 ?>

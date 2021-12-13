@@ -78,9 +78,9 @@ function refleshDetailData(){
   addDetailData();
 };
 function setInCartEvent() {
-  Evt(Id('incart'),'click',addCart);
+  Evt(Id('incart'),'click',addCartEx);
 }
-function addCart() {
+function addCartEx() {
   refleshDetailData();
   let req=new XMLHttpRequest();
   req.open('POST','connect/addSession.php',true);
@@ -88,7 +88,7 @@ function addCart() {
   let form=new FormData();
   form.append('base','excart');
   for(let i=0;i<kindData.length;i++){
-    form.append(kindData[i]+'_id',detailData[i][detailCheck[i]].id);
+    form.append(kindData[i],detailData[i][detailCheck[i]].id);
   }
   form.append('code',itemCode);
   form.append('price',dispCost);

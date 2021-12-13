@@ -1,9 +1,7 @@
 <?php
 require 'header.php';
 require 'connect/getDBSql.php';
-$pdo=new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;charset=utf8','LAA1290643','sd2adevelopment');
 ?>
-<!-- ここからそれぞれのコード -->
 <h2>BTOパソコンサイト<i class="fas fa-desktop"></i></h2>
 <div class="mainVisual"id="mainVisual">
   <div class="arrow_left"id="arrow_left"></div>
@@ -20,12 +18,12 @@ $pdo=new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;ch
 </div>
 <div class="middle_area">
   <div class="search_area">
-    <form method="post"action="search.php">
+    <form method="get"action="search.php">
       <h3>スペックから探す</h3>
       <div class="search_box s_keyword">
         キーワード
         <div class="search_info">
-          <input type="text" name="s_keyword" placeholder="キーワード">
+          <input type="text" name="Key" placeholder="キーワード">
           <i class="fas fa-key fa-lg fa-fw" aria-hidden="true"></i>
         </div>
       </div>
@@ -33,7 +31,7 @@ $pdo=new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;ch
         <div class="search_box">
           金額(下限)
           <div class="search_info">
-            <input type="number"name="s_minvalue">
+            <input type="number"name="Min">
             <i class="fas fa-yen-sign fa-lg fa-fw" aria-hidden="true"></i>
           </div>
         </div>
@@ -43,7 +41,7 @@ $pdo=new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;ch
         <div class="search_box">
           金額(上限)
           <div class="search_info">
-            <input type="number"name="s_maxvalue">
+            <input type="number"name="Max">
             <i class="fas fa-yen-sign fa-lg fa-fw" aria-hidden="true"></i>
          </div>
         </div>
@@ -51,12 +49,12 @@ $pdo=new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;ch
       <div class="search_box s_pc_cate">
         形状
         <div class="search_info">
-          <select name="s_type">
+          <select name="Type">
             <option value=0>指定なし</option>
 <?php
-$ary=getDBSql($pdo,'SELECT * FROM m_pc_cate');
-foreach($ary as$val) {
-  echo '<option value=',$val['pc_cate_id'],'>',$val['name'],'</option>';
+$ary=getDBSql('SELECT id, name FROM m_type');
+foreach($ary as $val) {
+  echo '<option value=',$val['id'],'>',$val['name'],'</option>';
 };
 ?>
           </select>
@@ -66,12 +64,12 @@ foreach($ary as$val) {
       <div class="search_box s_cpu">
         CPU
         <div class="search_info">
-          <select name="s_cpu">
+          <select name="CPU">
             <option value=0>指定なし</option>
 <?php
-$ary=getDBSql($pdo,'SELECT * FROM m_cpu');
+$ary=getDBSql('SELECT id, name FROM m_cpu');
 foreach($ary as$val) {
-  echo '<option value=',$val['cpu_id'],'>',$val['name'],'</option>';
+  echo '<option value=',$val['id'],'>',$val['name'],'</option>';
 };
 ?>
           </select>
@@ -81,14 +79,13 @@ foreach($ary as$val) {
       <div class="search_box s_ram">
         メモリ
         <div class="search_info">
-          <select name="s_memory">
+          <select name="RAM">
             <option value=0>指定なし</option>
 <?php
-$ary=getDBSql($pdo,'SELECT * FROM m_memory');
+$ary=getDBSql('SELECT id, name FROM m_ram');
 foreach($ary as$val) {
-  echo '<option value=',$val['memory_id'],'>',$val['name'],'</option>';
+  echo '<option value=',$val['id'],'>',$val['name'],'</option>';
 };
-$pdo=null;
 ?>
           </select>
           <i class="fas fa-sd-card fa-lg fa-fw" aria-hidden="true"></i>
@@ -102,12 +99,12 @@ $pdo=null;
   <div class="cate_area">
     <h3>カテゴリから探す</h3>
     <div class="cate_button_area">
-      <form method="post" action="search.php">
-        <button name="s_type" value="2" type="submit" class="desk">デスクトップPC</button>
-        <button name="s_type" value="3" type="submit" class="note">ノートPC</button>
-        <button name="s_type" value="1" type="submit" class="game">ゲーミングPC</button>
-        <button name="s_type" value="4" type="submit" class="create">クリエイター向けPC</button>
-        <button name="s_type" value="0" type="submit" class="peri">周辺機器</button>
+      <form method="get"action="search.php">
+        <button name="Type"value="2"type="submit"class="desk">デスクトップPC</button>
+        <button name="Type"value="3"type="submit"class="note">ノートPC</button>
+        <button name="Type"value="1"type="submit"class="game">ゲーミングPC</button>
+        <button name="Type"value="4"type="submit"class="create">クリエイター向けPC</button>
+        <button name="Type"value="0"type="submit"class="peri">周辺機器</button>
       </form>
     </div>
   </div>
@@ -115,8 +112,8 @@ $pdo=null;
 <!---------------------------------------->
 <div class="item_area">
   <h2>ケースを選択する</h2>
-  <div class="item_area_detail" id="item_area_detail">
+  <div class="item_area_detail"id="item_area_detail">
   </div>
-  <a  class="more_item" href="">もっと見る　<i class="fas fa-angle-double-right"></i></a>
+  <a class="more_item"href="">もっと見る<i class="fas fa-angle-double-right"></i></a>
 </div>
 <?php require 'footer.php'?>

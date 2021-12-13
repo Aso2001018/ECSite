@@ -1,7 +1,6 @@
 <?php
 require 'header.php';
 require 'connect/getDBSql.php';
-$pdo=new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;charset=utf8','LAA1290643','sd2adevelopment');
 function push($parent,...$childs) {
   foreach($childs as $child) {
     array_push($parent,$child);
@@ -35,48 +34,54 @@ $kindList=[];
 $kindList=push($kindList,
       new Kind('os'),
       new Kind('cpu'),
-      new Kind('memory'),
+      new Kind('ram'),
       new Kind('gpu'),
       new Kind('ssd'),
       new Kind('hdd'));
-$dispcost = 0;
+$item_get = getDBSql('SELECT * FROM d_item WHERE id = '.$_GET['id']);
+$dispcost = $item_get[0]['price'];
+echo'<script id="sc_set_dispcost">
+baseCost=',$dispcost,';
+remChild(Id(\'cont\'),Id(\'sc_set_dispcost\'));</script>';
 foreach($kindList as $kind) {
-  $ary=getDBSql($pdo, 'SELECT * FROM m_'.$kind->name);
+  $ary=getDBSql('SELECT * FROM m_'.$kind->name);
   $unsetflg = false;
   foreach($ary as $val) {
-    if ((!empty($_POST[$kind->name.'_id']) && $_POST[$kind->name.'_id'] == $val[$kind->name.'_id']) || (empty($_POST[$kind->name.'_id']) && !$unsetflg)) {
-      $kind->pushDetail($val[$kind->name.'_id'],$val['name'],$val['price'],true);
+    if ((!empty($_GET[mb_strtoupper($kind->name)]) && $_GET[mb_strtoupper($kind->name)] == $val['id']) || (empty($_GET[mb_strtoupper($kind->name)]) && !$unsetflg)) {
+      $kind->pushDetail($val['id'],$val['name'],$val['price'],true);
       $dispcost += $val['price'];
-      echo'<script>Log(',$val['price'],');</script>';
       $unsetflg = true;
     }
     else {
-      $kind->pushDetail($val[$kind->name.'_id'],$val['name'],$val['price'],false);
+      $kind->pushDetail($val['id'],$val['name'],$val['price'],false);
     }
   };
 }
-echo'<script>Log(',$dispcost,');</script>';
-echo '<div id="data_stack"style="display:none"><script>itemCode=',$_POST['item_code'],';';
+echo'<div id="data_stack"style="display:none"><script>itemCode=',$_GET['id'],';';
 $i=0;
 foreach($kindList as $kind) {
-  echo 'kindData.push(\'',$kind->name,'\');';
-  echo '{let phparray=new Array();';
+  echo'kindData.push(\'',$kind->name,'\');';
+  echo'{let phparray=new Array();';
   $n=0;
   foreach($kind->details as $detail) {
     if ($detail->checked)
-      echo 'detailCheck[',$i,']=',$n,';';
-    echo 'phparray.push(new Detail(',$detail->id,',\'',$detail->name,'\',',$detail->price,'));';
+      echo'detailCheck[',$i,']=',$n,';';
+    echo'phparray.push(new Detail(',$detail->id,',\'',$detail->name,'\',',$detail->price,'));';
     $n++;
   };
-  echo 'detailData.push(phparray);}';
+  echo'detailData.push(phparray);}';
   $i++;
 }
-echo 'remChild(Id(\'cont\'),Id(\'data_stack\'));</script></div>';
+echo'remChild(Id(\'cont\'),Id(\'data_stack\'));</script></div>';
 ?>
 <div class="customize_area"id="customize_area">
   <div class="nowconposition"id="nowconposition">
     <div class="img_area"id="img_area">
-      <img src="../image/NoImage.png">
+      <img id="cust_img"src="<?=$item_get[0]['imgurl']?>">
+      <script id="sc_cust_img">
+        Evt(Id('cust_img'),'error',recoverImg);
+        remChild(Id('img_area'),Id('sc_cust_img'));
+      </script>
     </div>
     <div class="partslist"id="partslist">
 <?php
@@ -84,7 +89,7 @@ foreach ($kindList as $kind) {
   echo'<div id="part_',$kind->name,'"style="width:100%;">';
   foreach ($kind->details as $detail) {
     if ($detail->checked) {
-      echo$detail->name;
+      echo'',$detail->name;
     }
   }
   echo'</div>';
@@ -114,22 +119,24 @@ foreach ($kindList as $kind) {
 ?>
     </div>
     <div class="detailselector"id="detailselector">
-      <?php
-        foreach ($kindList[0]->details as $detail) {
-          echo'<input type="radio"name="detail"value="',$detail->id,'"id=detail=_"',$detail->id,'"';
-          if($detail->checked)
-            echo' checked>';
-          else
-            echo'>';
-          echo'<label for="detail_',$detail->id,'">',$detail->name,'<abbr id="detail_price_',$detail->id,'"></abbr>';
-          echo'<script>Id("detail_price_',$detail->id,'").textContent=getPriceText(',$detail->price,'-detailData[0][detailCheck[0]].price,true);</script></label>';
-          /*
+<?php
+foreach ($kindList[0]->details as $detail) {
+  echo'<input type="radio"name="detail"value="',$detail->id,'"id="detail_',$detail->id,'"';
+  if($detail->checked)
+    echo' checked';
+  echo'><label for="detail_',$detail->id,'"id="detail_label_',$detail->id,'">',$detail->name,
+  '<abbr id="detail_price_',$detail->id,'"></abbr>
+  <script id="sc_detail">
+  Id(\'detail_price_',$detail->id,'\').textContent=getPriceText(',$detail->price,'-detailData[0][detailCheck[0]].price,true);
+  remChild(Id(\'detail_label_',$detail->id,'\'),Id(\'sc_detail\'));
+  </script></label>';
+/*
 <input type="radio"name="detail"value="0"id="detail_0">
 <label for="detail_0">a<abbr>¥0</abbr></label>
 getPriceText(detailData[radioValue][i].price-detailData[radioValue][detailCheck[radioValue]].price,true)
-          */
-        } 
-      ?>
+*/
+}
+?>
     </div>
   </div>
 </div>

@@ -130,12 +130,23 @@ function anim() {
           movest = false;
         }
         for(let i=0;i<6;i++) {
-          sldList[i].style.right=(25+50*Math.sin(nowtimer*Math.PI/2))+'%';
-          if (i < 2) {
-            sldList[i].style.opacity=(1+i-Math.sin(nowtimer*Math.PI/2))/2;
+          if (checkNum==0){
+            sldList[i].style.right=(25+50*Math.sin(nowtimer*Math.PI/2))+'%';
+            if (i < 2) {
+              sldList[i].style.opacity=(1+i-Math.sin(nowtimer*Math.PI/2))/2;
+            }
+            else {
+              sldList[i].style.opacity=(3-i+Math.sin(nowtimer*Math.PI/2))/2;
+            }
           }
           else {
-            sldList[i].style.opacity=(3-i+Math.sin(nowtimer*Math.PI/2))/2;
+            sldList[i].style.right=(25+50*nowtimer)+'%';
+            if (i < 2) {
+              sldList[i].style.opacity=(1+i-nowtimer)/2;
+            }
+            else {
+              sldList[i].style.opacity=(3-i+nowtimer)/2;
+            }
           }
         }
         if (new Date() - timer > movetime) {

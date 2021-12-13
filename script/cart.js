@@ -17,13 +17,13 @@ let cartItemList=[];
 let masterPrice=0;
 let itemNum=0;
 window.onload=function(){
-  if (cartItemList.length==0)cartItemList.push(new CartItem(-1,-1,-1,-1,-1,-1,-1,-1,-1));
-  let ary = Array('table','d_item','code',1);
-  for(let i = 0;i<cartItemList.length;i++) {
-    ary.push('code_'+i,cartItemList[i].item_code);
-  }
-  ary.push('list',cartItemList.length);
-  getDbResponseArray(setCartItem,ary);
+  // if (cartItemList.length==0)cartItemList.push(new CartItem(-1,-1,-1,-1,-1,-1,-1,-1,-1));
+  // let ary = Array('table','d_item','code',1);
+  // for(let i = 0;i<cartItemList.length;i++) {
+  //   ary.push('code_'+i,cartItemList[i].item_code);
+  // }
+  // ary.push('list',cartItemList.length);
+  // getDbResponseArray(setCartItem,ary);
 }
 function setCartItem() {
   const div=Id('item_area');
@@ -64,6 +64,15 @@ function setCartItem() {
     }
   }
 }
+
+/*
+<div class="ok">
+  <div class="sum">合計<span>(税込)</span></div>
+  <div class="ok_button">
+    <button type="button">購入する</button>
+  </div>
+</div>
+*/
 function setOkButton() {
   return add(
     cDiv('class','ok'),
