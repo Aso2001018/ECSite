@@ -83,7 +83,7 @@ function setInCartEvent() {
 function addCartEx() {
   refleshDetailData();
   let req=new XMLHttpRequest();
-  req.open('POST','connect/addSession.php',true);
+  req.open('POST','connect-php/addSession.php',true);
   req.responseType='json';
   let form=new FormData();
   form.append('base','excart');

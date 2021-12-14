@@ -1,6 +1,6 @@
 <?php
 require 'header.php';
-require 'connect/getDBSql.php';
+require 'connect-php/getDBSql.php';
 function push($parent,...$childs) {
   foreach($childs as $child) {
     array_push($parent,$child);

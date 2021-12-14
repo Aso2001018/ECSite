@@ -131,7 +131,7 @@ function addCartButton(iscart,code) {
 function addCart() {
   if (islogin) {
     let req=new XMLHttpRequest();
-    req.open('POST','connect/addSession.php',true);
+    req.open('POST','connect-php/addSession.php',true);
     req.responseType='json';
     let form=new FormData();
     form.append('base','cart');
@@ -140,7 +140,7 @@ function addCart() {
     req.send(form);
   } else {
     let req=new XMLHttpRequest();
-    req.open('POST','connect/login-connect.php',true);
+    req.open('POST','connect-php/login-connect.php',true);
     let form=new FormData();
     form.append('msg','購入するには、ログインする必要があります。');
     req.send(form);
@@ -149,7 +149,7 @@ function addCart() {
 }
 function deleteCart() {
   let req=new XMLHttpRequest();
-  req.open('POST','connect/addSession.php',true);
+  req.open('POST','connect-php/addSession.php',true);
   req.responseType='json';
   let form=new FormData();
   form.append('base','cart');
@@ -161,7 +161,7 @@ function deleteCart() {
 /**お気に入り操作*/
 function fixFav() {
   let req=new XMLHttpRequest();
-  req.open('POST','connect/addSession.php',true);
+  req.open('POST','connect-php/addSession.php',true);
   req.responseType='json';
   req.addEventListener('load',function() {
     Log(this.response);
@@ -261,7 +261,7 @@ function recoverImg() {
 */
 function getDbResponse(evt,...args) {
   let req=new XMLHttpRequest();
-  req.open('POST','connect/getJson.php',true);
+  req.open('POST','connect-php/getJson.php',true);
   req.responseType='json';
   req.addEventListener('load',evt);
   let form=new FormData();
@@ -272,7 +272,7 @@ function getDbResponse(evt,...args) {
 }
 function getDbResponseArray(evt,args) {
   let req=new XMLHttpRequest();
-  req.open('POST','connect/getJson.php',true);
+  req.open('POST','connect-php/getJson.php',true);
   req.responseType='json';
   req.addEventListener('load',evt);
   let form=new FormData();

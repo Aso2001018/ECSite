@@ -1,7 +1,7 @@
 <?php
 require 'header.php';
-require 'connect/getDBSql.php';
-require 'connect/getItem.php';
+require 'connect-php/getDBSql.php';
+require 'connect-php/getItem.php';
 ?>
 <form method="get"action="search.php">
   <div class="search_area"id="search_area">

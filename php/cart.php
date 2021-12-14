@@ -1,7 +1,7 @@
 <?php
 require 'header.php';
-require 'connect/getDBSql.php';
-require 'connect/getItem.php';
+require 'connect-php/getDBSql.php';
+require 'connect-php/getItem.php';
 $sql = 'SELECT 
 d_item.id AS id, 
 d_cart.id AS cart_id, 

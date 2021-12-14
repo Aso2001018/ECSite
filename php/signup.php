@@ -8,7 +8,7 @@ if ($_SESSION['login']) {
 ?>
 <h2>新規会員登録</h2>
 <div class="signupfield">
-  <form method="post"action="connect/connect-signup.php">
+  <form method="post"action="connect-php/connect-signup.php">
     <div class="box">
       お名前
       <input type="text"name="name"id="name"value="テストユーザー">

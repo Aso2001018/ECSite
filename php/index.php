@@ -1,6 +1,6 @@
 <?php
 require 'header.php';
-require 'connect/getDBSql.php';
+require 'connect-php/getDBSql.php';
 ?>
 <h2>BTOパソコンサイト<i class="fas fa-desktop"></i></h2>
 <div class="mainVisual"id="mainVisual">

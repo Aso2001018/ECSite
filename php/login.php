@@ -7,7 +7,7 @@ if (!empty($_SESSION['msg'])) {
 }
 ?>
 <div class="loginfield">
-  <form method="post"action="connect/login-connect.php">
+  <form method="post"action="connect-php/login-connect.php">
     <div class="box">
       メールアドレス
       <input type="text"name="mail"value="sample@gmail.com">
