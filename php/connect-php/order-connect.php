@@ -21,8 +21,8 @@ foreach($ary as $item) {
 $pdo=new PDO('mysql:host=mysql153.phy.lolipop.lan;dbname=LAA1290643-sd2a03dev;charset=utf8','LAA1290643','sd2adevelopment');
 $sql=$pdo->prepare('INSERT INTO d_order(user,order_date,price) VALUES('.$_SESSION['user_id'].',"'.date('Y-m-d').'",'.$price.');');
 $sql->execute();
-$ida=getDbSql('SELECT id FROM d_order WHERE user = '.$_SESSION['user_id'].' ORDER BY order_date DESC;');
-$id=$ida[0]['id'];
+$ida=getDbSql('SELECT id FROM d_order WHERE user = '.$_SESSION['user_id'].';');
+$id=$ida[count($ida)-1]['id'];
 $_SESSION['order_id'] = $id;
 foreach($ary as $item) {
   $sql=$pdo->prepare('INSERT INTO d_order_detail(orderid,cart) VALUES('.$id.','.$item['id'].');');

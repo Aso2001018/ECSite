@@ -64,9 +64,7 @@ function calcDispCost(){
   dispCost=baseCost;
   for (let i=0;i<kindData.length;i++) {
     dispCost+=detailData[i][detailCheck[i]].price;
-    Log(detailData[i][detailCheck[i]].price);
   }
-  Log(dispCost);
 }
 function setDetailCk(){
   detailCheck[Math.floor(this.value/10)]=this.value%10;
@@ -93,7 +91,9 @@ function addCartEx() {
   form.append('code',itemCode);
   form.append('price',dispCost);
   req.send(form);
-  window.location.href = 'cart.php';
+  Evt(req,'load',()=>{
+    window.location.href = 'cart.php';
+  });
 }
 
 window.onload=function() {

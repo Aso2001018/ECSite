@@ -1,25 +1,3 @@
-function itemAreaDetailStruct(name,href,src) {
-  this.object=add(add(add(cDiv('class','items'),
-                          add(cH4(),
-                              cText(name))),
-                      add(cDiv('class','item_pic'),
-                          add(cA('href',href),
-                              cImg('src',src)))),
-                  add(cButton('type','button'),
-                      cText('商品を見る'))
-  );
-}
-const itemAreaDetail=[
-  new itemAreaDetailStruct('商品名','','../image/item_01.jpg'),
-  new itemAreaDetailStruct('商品名','','../image/item_02.jpg'),
-  new itemAreaDetailStruct('商品名','','../image/item_03.jpg')
-];
-function setItemAreaDetail() {
-  const area=Id('item_area_detail');
-  for(let i=0;i<itemAreaDetail.length;i++){
-    area.appendChild(itemAreaDetail[i].object);
-  }
-}
 let loop=function(f){
 let h={};
 let l=function(){f();
@@ -35,40 +13,34 @@ let onload = false;
 let divSlider;
 let divPoints;
 window.onload = function() {
-  setItemAreaDetail();
+  //setItemAreaDetail();
   onload = true;
-  document.getElementById('arrow_left').appendChild(document.createTextNode('<'));
-  document.getElementById('arrow_left').addEventListener('click',()=>{
+  add(Id('arrow_left'),cText('<'));
+  Evt(Id('arrow_left'),'click',()=>{
     animpart = 2;
     nowselect -1 >= 0 ? nowselect-- : nowselect = sldNum - 1;
     movest = true;
     timer = new Date();
     nowtimer = 0;
   });
-  document.getElementById('arrow_right').appendChild(document.createTextNode('>'));
-  document.getElementById('arrow_right').addEventListener('click',()=>{
+  add(Id('arrow_right'),cText('>'));
+  Evt(Id('arrow_right'),'click',()=>{
     animpart = 1;
     nowselect + 1 < sldNum ? nowselect++ : nowselect = 0;
     movest = true;
     timer = new Date();
     nowtimer = 0;
   });
-  divSlider = document.getElementById('slider');
+  divSlider = Id('slider');
   sldList = divSlider.getElementsByTagName('li');
   sldNum = sldList.length;
-  divPoints = document.getElementById('slider_point');
+  divPoints = Id('slider_point');
   for (let i=0;i<sldNum;i++) {
-    let btn = document.createElement('input');
-    btn.type="radio";
-    btn.name="slider_ptbtn";
-    btn.className="slider_ptbtn";
-    btn.id="slider_ptbtn"+i;
-    btn.checked=i==0;
-    btn.addEventListener('change',sliderMove);
-    divPoints.appendChild(btn);
-    let lbl = document.createElement('label');
-    lbl.setAttribute('for','slider_ptbtn'+i);
-    divPoints.appendChild(lbl);
+    add(
+      divPoints,
+      cInput('type','radio','name','slider_ptbtn','class','slider_ptbtn','id','slider_ptbtn'+i,'checked',i==0,'event','change',sliderMove),
+      cLabel('html','slider_ptbtn'+i)
+    );
   }
   anim();
 }
@@ -97,8 +69,7 @@ function anim() {
     switch(animpart) {
       case -1:
         for (let i=0;i<sldNum-2;i++) {
-          const last = divSlider.removeChild(sldList[0]);
-          divSlider.appendChild(last);
+          add(divSlider,remChild(divSlider,sldList[0]));
         }
         for (let i=0;i<sldNum-2;i++) {
           if (i < 2) {
@@ -125,8 +96,7 @@ function anim() {
         break;
       case 1:
         if (movest) {
-          const last = divSlider.removeChild(sldList[0]);
-          divSlider.appendChild(last);
+          add(divSlider,remChild(divSlider,sldList[0]));
           movest = false;
         }
         for(let i=0;i<6;i++) {
@@ -172,8 +142,7 @@ function anim() {
       case 2:
         if (movest) {
           for (let i=0;i<sldNum-1;i++) {
-            const last = divSlider.removeChild(sldList[0]);
-            divSlider.appendChild(last);
+            add(divSlider,remChild(divSlider,sldList[0]));
           }
           movest = false;
         }

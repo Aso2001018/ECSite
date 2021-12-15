@@ -1,17 +1,33 @@
 <?php
 require 'header.php';
-require 'connect-php/getDBSql.php';
 ?>
 <h2>BTOパソコンサイト<i class="fas fa-desktop"></i></h2>
 <div class="mainVisual"id="mainVisual">
   <div class="arrow_left"id="arrow_left"></div>
   <ul class="slider" id="slider">
-    <li><a href="#"><img src="../image/color_blue.png" alt=""></a></li>
-    <li><a href="#"><img src="../image/color_green.png" alt=""></a></li>
-    <li><a href="#"><img src="../image/color_orange.png" alt=""></a></li>
-    <li><a href="#"><img src="../image/color_black.png" alt=""></a></li>
-    <li><a href="#"><img src="../image/color_red.png" alt=""></a></li>
-    <li><a href="#"><img src="../image/color_yellow.png" alt=""></a></li>
+<?php
+function setSliderItem($item,$os,$cpu,$ram,$gpu,$ssd,$hdd,$img) {
+  echo '
+  <li>
+    <form method="get"action="customize.php">
+      <input type="hidden"name="id"value="',$item,'">
+      <input type="hidden"name="OS"value="',$os,'">
+      <input type="hidden"name="CPU"value="',$cpu,'">
+      <input type="hidden"name="RAM"value="',$ram,'">
+      <input type="hidden"name="GPU"value="',$gpu,'">
+      <input type="hidden"name="SSD"value="',$ssd,'">
+      <input type="hidden"name="HDD"value="',$hdd,'">
+      <input type="image"name="submit"src="',$img,'">
+    </form>
+  </li>';
+}
+setSliderItem(1,1,1,1,1,1,1,'../image/color_blue.png');
+setSliderItem(1,1,1,1,1,1,1,'../image/color_green.png');
+setSliderItem(1,1,1,1,1,1,1,'../image/color_orange.png');
+setSliderItem(1,1,1,1,1,1,1,'../image/color_black.png');
+setSliderItem(1,1,1,1,1,1,1,'../image/color_red.png');
+setSliderItem(1,1,1,1,1,1,1,'../image/color_yellow.png');
+?>
   </ul>
   <div class="arrow_right"id="arrow_right"></div>
   <div class="slider_point"id="slider_point"></div>
@@ -113,7 +129,35 @@ foreach($ary as$val) {
 <div class="item_area">
   <h2>ケースを選択する</h2>
   <div class="item_area_detail"id="item_area_detail">
+<?php
+$ary=getDbSql('SELECT * FROM m_case LIMIT 0,3');
+$cnt=0;
+foreach($ary as $item) {
+  echo '
+  <div class="items">
+    <h4>',$item['name'],'</h4>
+    <div class="item_pic">
+      <a><img id="case_img_',$cnt,'" src="',$item['imgurl'],'"></a>
+    </div>
+    <form method="get"action="customize.php">
+      <input name="id"value="1"style="display:none">
+      <input name="OS"value="1"style="display:none">
+      <input name="CPU"value="1"style="display:none">
+      <input name="RAM"value="1"style="display:none">
+      <input name="GPU"value="1"style="display:none">
+      <input name="SSD"value="1"style="display:none">
+      <input name="HDD"value="1"style="display:none">
+      <button type="submit">カスタマイズ</button>
+    </form>
   </div>
-  <a class="more_item"href="">もっと見る<i class="fas fa-angle-double-right"></i></a>
+  <script id="sc_',$cnt,'">
+  Evt(Id(\'case_img_',$cnt,'\'),\'error\',recoverImg);
+  </script>
+  ';
+  $cnt++;
+}
+?>
+  </div>
+  <a class="more_item"href="case.php">もっと見る<i class="fas fa-angle-double-right"></i></a>
 </div>
 <?php require 'footer.php'?>

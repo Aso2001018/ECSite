@@ -1,6 +1,5 @@
 <?php
 require 'header.php';
-require 'connect-php/getDBSql.php';
 function push($parent,...$childs) {
   foreach($childs as $child) {
     array_push($parent,$child);
@@ -130,11 +129,6 @@ foreach ($kindList[0]->details as $detail) {
   Id(\'detail_price_',$detail->id,'\').textContent=getPriceText(',$detail->price,'-detailData[0][detailCheck[0]].price,true);
   remChild(Id(\'detail_label_',$detail->id,'\'),Id(\'sc_detail\'));
   </script></label>';
-/*
-<input type="radio"name="detail"value="0"id="detail_0">
-<label for="detail_0">a<abbr>¥0</abbr></label>
-getPriceText(detailData[radioValue][i].price-detailData[radioValue][detailCheck[radioValue]].price,true)
-*/
 }
 ?>
     </div>

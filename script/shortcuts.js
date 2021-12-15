@@ -70,13 +70,12 @@ function Evt(element,event,func) {
 }
 function delChild(parent) {
   while(parent.childNodes.length>0){
-  remChild(parent,parent.lastChild);
+    remChild(parent,parent.lastChild);
   }
 }
 function remChild(parent,child) {
-  parent.removeChild(child);
+  return parent.removeChild(child);
 }
-
 /**配列から、Node情報をセットする*/
 function setNodeData(node,ary) {
   let m = Id('a');
@@ -87,11 +86,11 @@ case'alt'         :node.alt         =ary[++i];break;
 case'aria-hidden' :node.ariaHidden  =ary[++i];break;
 case'checked'     :node.checked     =ary[++i];break;
 case'class'       :node.className   =ary[++i];break;
-case'event'       :node.addEventListener(ary[++i],ary[++i]);break;
+case'event'       :Evt(node,ary[++i],ary[++i]);break;
 case'href'        :node.href        =ary[++i];break;
-case'inhtml'      :node.innerHTML   =ary[++i];break;
 case'html'        :node.htmlFor     =ary[++i];break;
 case'id'          :node.id          =ary[++i];break;
+case'inhtml'      :node.innerHTML   =ary[++i];break;
 case'method'      :node.method      =ary[++i];break;
 case'name'        :node.name        =ary[++i];break;
 case'placeholder' :node.placeholder =ary[++i];break;
@@ -138,13 +137,11 @@ function addCart() {
     form.append('mode','add');
     form.append('code',this);
     req.send(form);
+    Evt(req,'load',()=>{
+      window.location.href='cart.php';
+    });
   } else {
-    let req=new XMLHttpRequest();
-    req.open('POST','connect-php/login-connect.php',true);
-    let form=new FormData();
-    form.append('msg','購入するには、ログインする必要があります。');
-    req.send(form);
-    window.location.href = 'login.php';
+    window.location.href = 'cart.php';
   }
 }
 function deleteCart() {
@@ -156,16 +153,15 @@ function deleteCart() {
   form.append('mode','delete');
   form.append('code',this);
   req.send(form);
-  window.location.href = 'cart.php';
+  Evt(req,'load',()=>{
+    window.location.href='cart.php';
+  });
 }
 /**お気に入り操作*/
 function fixFav() {
   let req=new XMLHttpRequest();
   req.open('POST','connect-php/addSession.php',true);
   req.responseType='json';
-  req.addEventListener('load',function() {
-    Log(this.response);
-  });
   let form=new FormData();
   form.append('base','fav');
   form.append('code',this);
@@ -263,7 +259,7 @@ function getDbResponse(evt,...args) {
   let req=new XMLHttpRequest();
   req.open('POST','connect-php/getJson.php',true);
   req.responseType='json';
-  req.addEventListener('load',evt);
+  Evt(req,'load',evt);
   let form=new FormData();
   for(let i=0;i<args.length;i++){
     form.append(args[i],args[++i]);
@@ -274,7 +270,7 @@ function getDbResponseArray(evt,args) {
   let req=new XMLHttpRequest();
   req.open('POST','connect-php/getJson.php',true);
   req.responseType='json';
-  req.addEventListener('load',evt);
+  Evt(req,'load',evt);
   let form=new FormData();
   for(let i=0;i<args.length;i++){
     form.append(args[i],args[++i]);

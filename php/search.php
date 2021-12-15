@@ -1,6 +1,5 @@
 <?php
 require 'header.php';
-require 'connect-php/getDBSql.php';
 require 'connect-php/getItem.php';
 ?>
 <form method="get"action="search.php">

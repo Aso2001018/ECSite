@@ -9,14 +9,12 @@ if (isset($_SESSION['login'])) {
       $_SESSION['user_id'] = $ret[0]['id'];
       http_response_code(301);
       header("Location: ../index.php");
-      endDbSql();
       exit;
     }
     else {
       $_SESSION['msg'] = '一致するアカウントが見つかりませんでした。';
       http_response_code(301);
       header("Location: ../login.php");
-      endDbSql();
       exit;
     }
   }
@@ -27,14 +25,12 @@ if (isset($_SESSION['login'])) {
       $_SESSION['msg'] = '一致するアカウントが見つかりませんでした。';
     http_response_code(301);
     header("Location: ../login.php");
-    endDbSql();
     exit;
   }
 }
 else {
 	http_response_code(301);
 	header("Location: ../login.php");
-  endDbSql();
 	exit;
 }
 ?>

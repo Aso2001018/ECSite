@@ -37,7 +37,7 @@
 @media screen and (max-width: 480px) {
 }
 body{
-  font-family:"æ¸¸ã‚´ã‚·ãƒƒã‚¯","ãƒ’ãƒ©ã‚®ãƒŽè§’ã‚´ ProN";
+  font-family:"游ゴシック","ヒラギノ角ゴ ProN";
   white-space:nowrap;
   -webkit-appearance:none;
   background-color:var(--sbase);
@@ -142,6 +142,18 @@ a{
 .nav_menu2_item svg{
   margin-right:5px;
   font-size:18px;
+}
+.nav_menu2_item .cart_badge{
+  min-width:13px;
+  height:13px;
+  background-color:#F47;
+  display:inline-block;
+  position:absolute;
+  border-radius:8px;
+  margin-left:-10px;
+  margin-top:-7px;
+  color:#FFF;
+  font-size:7px;
 }
 .nav_menu2_item a{
   font-size:15px;

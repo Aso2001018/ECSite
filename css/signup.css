@@ -7,6 +7,15 @@
   padding:10px 0;
   white-space:normal;
 }
+.message{
+  width:100%;
+  max-width:500px;
+  border:solid 1px #090;
+  color:#090;
+  margin:10px auto;
+  padding:10px 0;
+  white-space:normal;
+}
 .signupfield{
   max-width:500px;
   border:solid 1px var(--main);
@@ -28,20 +37,21 @@
   font:15px/24px sans-serif;
   display:block;
 }
-.signupfield>button{
+.signupfield button{
   color:var(--themebase);
   background-color:var(--thememain);
   border:solid 2px var(--thememain);
   border-radius:4px;
+  padding:0 3px;
   outline:none;
   font-size:15px;
   font-weight:bold;
   transition:0.1s;
 }
-.signupfield>button:hover{
+.signupfield button:hover{
   color:var(--thememain);
   background-color:var(--themebase);
 }
-.signupfield>button:active{
+.signupfield button:active{
   transform:scale(0.9);
 }

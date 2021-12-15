@@ -1,6 +1,5 @@
 <?php
 require 'header.php';
-require 'connect-php/getDBSql.php';
 require 'connect-php/getItem.php';
 $sql = 'SELECT 
 d_item.id AS id, 

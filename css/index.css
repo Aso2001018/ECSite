@@ -73,7 +73,13 @@
   height:100%;
   text-align:center;
 }
+.slider input[type=image]{
+  vertical-align:baseline;
+  transform-origin:50% 50%;
+  width:100%;
+}
 .slider img{
+  vertical-align:baseline;
   transform-origin:50% 50%;
   width:100%;
 }

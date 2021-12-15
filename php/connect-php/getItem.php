@@ -22,13 +22,13 @@ function setItemData($href,$img,$name,$html,$price,$isfav,$item,$os,$cpu,$ram,$g
       <div class="item_price"id="item_price">',getPriceText($price,false),'(税込)',$iscart?'':'～','</div>
       <div class="item_button">
         <form method="get"action="customize.php">
-          <input name="id"value="',$item,'"style="display:none">
-          <input name="OS"value="',$os,'"style="display:none">
-          <input name="CPU"value="',$cpu,'"style="display:none">
-          <input name="RAM"value="',$ram,'"style="display:none">
-          <input name="GPU"value="',$gpu,'"style="display:none">
-          <input name="SSD"value="',$ssd,'"style="display:none">
-          <input name="HDD"value="',$hdd,'"style="display:none">
+          <input type="hidden"name="id"value="',$item,'">
+          <input type="hidden"name="OS"value="',$os,'">
+          <input type="hidden"name="CPU"value="',$cpu,'">
+          <input type="hidden"name="RAM"value="',$ram,'">
+          <input type="hidden"name="GPU"value="',$gpu,'">
+          <input type="hidden"name="SSD"value="',$ssd,'">
+          <input type="hidden"name="HDD"value="',$hdd,'">
           <button type="submit"class="button_itemdetail"',$nobutton?'style="display:none;"':'','>カスタマイズ</button>
         </form>
         <button type="button"id="cart_button_',$idn,'"class="button_',$iscart?'delete"':'addcart"',$nobutton?'style="display:none;"':'','>カート',$iscart?'から削除':'へ追加','</button>
