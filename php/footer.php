@@ -7,13 +7,25 @@
         <h3>メニュー</h3>
         <ul class="foot-left">
           <li style="display: none">f</li>
-          <li><a href="login.php">ログイン</a></li>
-          <li><a href="info.php">会員情報</a></li>
           <li><a href="fav.php">お気に入り</a></li>
           <li><a href="cart.php">カート</a></li>
+          <li><a href="history.php">購入履歴</a></li>
         </ul>
       </div>
       <div class="menu-center">
+        <h3>アカウント</h3>
+        <ul class="foot-right">
+          <li style="display: none">f</li>
+          <li><a href="signup.php">新規会員登録</a></li>
+          <li><a href="login.php">ログイン</a></li>
+          <li><a href="logout.php">ログアウト</a></li>
+          <li><a href="info.php">会員情報</a></li>
+          <!-- <li><a href="#">ご利用ガイド</a></li>
+          <li><a href="#">お問い合わせ</a></li>
+          <li><a href="#">サポート</a></li> -->
+        </ul>
+      </div>
+        <div class="menu-right">
         <h3>カテゴリ</h3>
         <form method="get"action="search.php">
           <ul class="foot-center">
@@ -25,16 +37,6 @@
             <li><button name="Type"value="0"type="submit">周辺機器</button></li>
           </ul>
         </form>
-      </div>
-        <div class="menu-right">
-        <h3>サポート</h3>
-        <ul class="foot-right">
-          <li style="display: none">f</li>
-          <li><a href="signup.php">新規会員登録</a></li>
-          <!-- <li><a href="#">ご利用ガイド</a></li>
-          <li><a href="#">お問い合わせ</a></li>
-          <li><a href="#">サポート</a></li> -->
-        </ul>
       </div>
       <small class="cmark">©2021システム開発3班</small>
     </div>

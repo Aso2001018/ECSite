@@ -66,6 +66,7 @@ if (count($ary) > 0) {
       $itemDrawNum,
       true,
       $item['cart_id'],
+      true
     );
     $itemDrawNum++;
     $masterprice+=intval($item['Price']);
@@ -74,12 +75,9 @@ if (count($ary) > 0) {
 <div class="ok">
   <div class="sum">合計<span>',getPriceText($masterprice,false),'(税込)</span></div>
   <div class="ok_button">
-    <button type="button"onclick="location.href=\'order.php\'">購入する</button>
+    <button type="button"onclick="location.href=\'connect-php/order-connect.php\'">購入を確定する</button>
   </div>
 </div>';
-}
-else {
-  echo'<hr>カートは空です。';
 }
 ?>
 </div>

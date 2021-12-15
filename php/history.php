@@ -19,8 +19,9 @@ m_ram.name AS RAMName,
 m_gpu.name AS GPUName, 
 m_ssd.name AS SSDName, 
 m_hdd.name AS HDDName, 
+d_order.order_date AS OrderDate, 
 d_item.price + m_os.price + m_cpu.price + m_ram.price + m_gpu.price + m_ssd.price + m_hdd.price AS Price 
-FROM d_cart, d_item, m_os, m_cpu, m_ram, m_gpu, m_ssd, m_hdd 
+FROM d_cart, d_item, d_order, d_order_detail, m_os, m_cpu, m_ram, m_gpu, m_ssd, m_hdd 
 WHERE d_cart.OS = m_os.id 
 AND d_cart.CPU = m_cpu.id 
 AND d_cart.RAM = m_ram.id 
@@ -28,22 +29,31 @@ AND d_cart.GPU = m_gpu.id
 AND d_cart.SSD = m_ssd.id 
 AND d_cart.HDD = m_hdd.id 
 AND d_cart.item = d_item.id 
-AND d_cart.ordered = 0 
-AND d_cart.user = '.$_SESSION['user_id'].';';
+AND d_cart.ordered = 1 
+AND d_cart.id = d_order_detail.cart 
+AND d_order_detail.orderid = d_order.id 
+AND d_cart.user = '.$_SESSION['user_id'].' 
+ORDER BY d_order.order_date DESC;';
 $ary = getDbSql($sql);
-$masterprice=0;
 ?>
 <div class="title"id="title">
-  <h2>カート</h2>
-  <div class="itemnum"id="itemnum">
-    <?=count($ary)?>個の商品
-  </div>
+  <h2>購入履歴</h2>
 </div>
 <div class="item_area" id="item_area">
-<?php
-if (count($ary) > 0) {
-  $itemDrawNum = 0;
+<?php 
+if (count($ary) == 0) {
+  echo '<hr>購入履歴はありません。';
+}
+else {
+  $date = $ary[0]['OrderDate'];
+  echo '<hr><h3>',$date,'</h3>';
+  echo'';
+  $itemNum=0;
   foreach($ary as $item) {
+    if ($date != $item['OrderDate']) {
+      $date = $item['OrderDate'];
+      echo '<hr><h3>',$date,'</h3>';
+    }
     setItemData(
       '#',
       $item['IMG'],
@@ -63,23 +73,13 @@ if (count($ary) > 0) {
       $item['GPU'],
       $item['SSD'],
       $item['HDD'],
-      $itemDrawNum,
+      $itemNum,
       true,
-      $item['cart_id'],
+      -1,
+      true
     );
-    $itemDrawNum++;
-    $masterprice+=intval($item['Price']);
+    $itemNum++;
   }
-  echo '
-<div class="ok">
-  <div class="sum">合計<span>',getPriceText($masterprice,false),'(税込)</span></div>
-  <div class="ok_button">
-    <button type="button"onclick="location.href=\'order.php\'">購入する</button>
-  </div>
-</div>';
-}
-else {
-  echo'<hr>カートは空です。';
 }
 ?>
 </div>
