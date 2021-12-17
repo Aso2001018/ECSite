@@ -21,9 +21,11 @@
 .cont h2{
   font-size:25px;
   margin:20px auto;
+  user-select:none;
 }
 .mainVisual{
   white-space:nowrap;
+  user-select:none;
 }
 .arrow_left{
   user-select:none;
@@ -74,14 +76,16 @@
   text-align:center;
 }
 .slider input[type=image]{
-  vertical-align:baseline;
+  vertical-align:middle;
   transform-origin:50% 50%;
   width:100%;
+  height:100%;
 }
 .slider img{
-  vertical-align:baseline;
+  vertical-align:middle;
   transform-origin:50% 50%;
   width:100%;
+  height:100%;
 }
 .slider_point{
   text-align:center;
@@ -108,6 +112,7 @@
   width:100%;
   height:auto;
   text-align:center;
+  user-select:none;
 }
 .middle_area h3{
   margin:10px 0;
@@ -271,6 +276,7 @@
   height:400px;
   margin-top:50px;
   position:relative;
+  user-select:none;
 }
 .item_area>h2{
   margin:0;
@@ -290,7 +296,10 @@
   text-align:left;
   font-size:20px;
   margin:0;
+  user-select:text;
+  white-space:normal;
   color:var(--thememain);
+  white-space:normal;
 }
 .item_pic{
   width:100%;
@@ -320,6 +329,7 @@
   transform:scale(0.9);
 }
 .more_item{
+  user-select:none;
   font-size:15px;
   color:var(--moreviewtext);
   transition:0.2s;

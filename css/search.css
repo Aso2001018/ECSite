@@ -5,6 +5,7 @@
   display:block;
   margin:0 0 5% 0;
   padding:3%;
+  user-select:none;
   border:1px solid var( --main);
   font-size:0;
   white-space:normal;

@@ -20,6 +20,7 @@ var detailCheck = [0,0,0,0,0,0];
 var baseCost = 0;
 var dispCost = 0;
 var itemCode = -1;
+var kindRange = 1000;
 
 function setupBody(){
   setKindEvent();
@@ -39,7 +40,7 @@ function addDetailData(){
     add(
       add(
         div,
-        cInput('type','radio','name','detail','value',i+radVal*10,'id','detail_'+i,'checked',detailCheck[radVal]==i,'event','change',setDetailCk)),
+        cInput('type','radio','name','detail','value',i+radVal*kindRange,'id','detail_'+i,'checked',detailCheck[radVal]==i,'event','change',setDetailCk)),
       add(
         add(
           cLabel('html','detail_'+i),
@@ -67,7 +68,7 @@ function calcDispCost(){
   }
 }
 function setDetailCk(){
-  detailCheck[Math.floor(this.value/10)]=this.value%10;
+  detailCheck[Math.floor(this.value/kindRange)]=this.value%kindRange;
   setPartsList();
 }
 function refleshDetailData(){

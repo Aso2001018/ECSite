@@ -20,7 +20,7 @@ function setItemData($href,$img,$name,$html,$price,$isfav,$item,$os,$cpu,$ram,$g
       <div class="item_name">',$name,'</div>
       <div class="item_desc">',$html,'</div>
       <div class="item_price"id="item_price">',getPriceText($price,false),'(税込)',$iscart?'':'～','</div>
-      <div class="item_button">
+      <div class="item_button"',$nobutton?'style="display:none;"':'','>
         <form method="get"action="customize.php">
           <input type="hidden"name="id"value="',$item,'">
           <input type="hidden"name="OS"value="',$os,'">

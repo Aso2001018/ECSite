@@ -43,6 +43,7 @@ body{
   background-color:var(--sbase);
 }
 header{
+  user-select:none;
   display:block;
   position:fixed;
   top:-100px;
@@ -153,6 +154,7 @@ a{
   border-radius:8px;
   margin-left:-10px;
   margin-top:-4px;
+  padding:0 3px;
   color:#FFF;
   font-size:7px;
 }
@@ -211,6 +213,7 @@ footer{
   display:block;
   position:relative;
   bottom:0;
+  user-select:none;
   top:100px;
   width:100%;
   border-top:solid 1px var(--main);
@@ -239,6 +242,7 @@ footer{
 .foot-wrap a,button{
   text-decoration:none;
   font-size:16px;
+  font-weight:normal;
   border:none;
   background-color:#0000;
   color:var(--main);

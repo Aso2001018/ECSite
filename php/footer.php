@@ -34,7 +34,7 @@
             <li><button name="Type"value="3"type="submit">ノートPC</button></li>
             <li><button name="Type"value="1"type="submit">ゲーミングPC</button></li>
             <li><button name="Type"value="4"type="submit">クリエイター向けPC</button></li>
-            <li><button name="Type"value="0"type="submit">周辺機器</button></li>
+            <li><button name="Type"value="5"type="submit">周辺機器</button></li>
           </ul>
         </form>
       </div>
